@@ -156,6 +156,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -173,6 +177,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -181,8 +186,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Item {\n  id          String  @id @default(cuid())\n  name        String\n  description String?\n  price       Float\n  stock       Int\n\n  //one to many\n  categoryId String?\n  category   Categories? @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n\n  userId   String?\n  imageUrl String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([name])\n}\n\nmodel Categories {\n  id   String @id @default(cuid())\n  name String\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  Item      Item[] //many to one relationship \n\n  userId String?\n\n  @@index([name])\n}\n",
-  "inlineSchemaHash": "eb925a697ef8438f362107fb532f4506d47f088f7f2e588d358605fb41976e64",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Item {\n  id          String  @id @default(cuid())\n  name        String\n  description String?\n  price       Float\n  stock       Int\n\n  //one to many\n  categoryId String?\n  category   Categories? @relation(fields: [categoryId], references: [id], onDelete: SetNull)\n\n  userId   String?\n  imageUrl String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([name])\n}\n\nmodel Categories {\n  id   String @id @default(cuid())\n  name String\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  Item      Item[] //many to one relationship \n\n  userId String?\n\n  @@index([name])\n}\n",
+  "inlineSchemaHash": "b9b561c4fd37cfe7f4e31ffeea3c3bccfa2ff7c205c7bfb80a46679540398f97",
   "copyEngine": true
 }
 
@@ -223,6 +228,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/generated/prisma/schema.prisma")
