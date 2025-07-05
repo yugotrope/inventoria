@@ -161,3 +161,28 @@ export async function getCategoryId(data: string){
     }
 
 }
+
+export async function getItemById(id: string) {
+    try{
+        const currUserId = await getUserId();
+
+        if(!currUserId) {
+            throw new Error("User not authenticated")
+        }; 
+
+        const item = await db.item.findFirst({
+            where: {
+                userId: currUserId,
+                id: id,
+            },
+            include: {
+                category: true,
+            }
+        });
+
+        return item;
+    }  catch (error) {
+        console.error("Error fetching item:", error);
+        throw new Error("Failed to fetch item")
+    }
+}

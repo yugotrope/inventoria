@@ -17,6 +17,7 @@ import { useState } from "react";
 import { createItem, getCategories, getCategoryId } from "@/actions/items.actions";
 import { Textarea } from "@/components/ui/textarea";
 import toast from 'react-hot-toast';
+import ImageUpload from "./ImageUpload";
 
 type Category = Awaited<ReturnType<typeof getCategories>>
 
@@ -104,6 +105,10 @@ interface AddItemButtonProps {
                 <Label htmlFor="description">Description</Label>
                 <Textarea id="description" placeholder="Add item description" onChange={(e)=>handleChange("description",e.target.value)} required/>
             </div>
+            <Label htmlFor="image" className="mb-2">Image</Label>
+            <ImageUpload endpoint="postImage" value={formData.imageUrl} onChange={(url) => {
+              handleChange("imageUrl", url);
+            }}/>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <Button type="submit" className="bg-blue-500 text-white">Add Item</Button>

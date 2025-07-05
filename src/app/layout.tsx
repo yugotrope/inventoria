@@ -5,7 +5,10 @@ import { Geist, Geist_Mono, Reddit_Sans } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/ui/navbar-04/navbar-04";
 import { ThemeProvider } from "./_components/theme-provider";
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 const redditSans = Reddit_Sans({
   variable: "--font-reddit-sans",
@@ -46,6 +49,9 @@ export default function RootLayout({
         <Toaster
           position="top-right"
           reverseOrder={false}
+        />
+        <NextSSRPlugin
+          routerConfig={extractRouterConfig(ourFileRouter)}
         />
         <NavBar/>
         {children}
