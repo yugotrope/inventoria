@@ -3,7 +3,6 @@ import { Prisma } from "@/generated/prisma";
 import { getUserId } from "./user.actions"
 import {db} from "@/lib/prisma"
 import { revalidatePath } from "next/cache";
-import { error } from "console";
 
 export async function getItems() {
     try{

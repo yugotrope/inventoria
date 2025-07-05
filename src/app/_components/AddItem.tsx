@@ -15,7 +15,6 @@ import { Label } from "@/components/ui/label";
 import { CategoryDropdown } from "./CategoryDropdown";
 import { useState } from "react";
 import { createItem, getCategories, getCategoryId } from "@/actions/items.actions";
-import AddCategory from "./AddCategory";
 import { Textarea } from "@/components/ui/textarea";
 import toast from 'react-hot-toast';
 
